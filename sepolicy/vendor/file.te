@@ -1,0 +1,10 @@
+type sysfs_charger, sysfs_type, fs_type;
+type sysfs_iio, sysfs_type, fs_type;
+type sysfs_inscreen, sysfs_type, fs_type;
+type sysfs_light, sysfs_type, fs_type;
+type sysfs_livedisplay, sysfs_type, fs_type;
+type sysfs_power_supply, sysfs_type, fs_type;
+type sysfs_touchpanel_gestures, sysfs_type, fs_type;
+
+type acdb_data_file, data_file_type, file_type;
+type time_data_file, data_file_type, file_type;

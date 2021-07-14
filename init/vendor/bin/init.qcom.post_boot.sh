@@ -127,11 +127,11 @@ else
         echo 70 > /proc/sys/vm/swap_ratio
 
         # Swap disk - 200MB size
-        if [ ! -f /data/system/swap/swapfile ]; then
-            dd if=/dev/zero of=/data/system/swap/swapfile bs=1m count=200
+        if [ ! -f /data/vendor/swap/swapfile ]; then
+            dd if=/dev/zero of=/data/vendor/swap/swapfile bs=1m count=200
         fi
-        mkswap /data/system/swap/swapfile
-        swapon /data/system/swap/swapfile -p 32758
+        mkswap /data/vendor/swap/swapfile
+        swapon /data/vendor/swap/swapfile -p 32758
     fi
 fi
 }
@@ -2747,7 +2747,7 @@ case "$target" in
         # Turn on sleep modes.
         echo 0 > /sys/module/lpm_levels/parameters/sleep_disabled
 	echo 100 > /proc/sys/vm/swappiness
-	echo 120 > /proc/sys/vm/watermark_scale_factor
+	echo 1 > /proc/sys/vm/watermark_scale_factor
     ;;
 esac
 
@@ -3130,7 +3130,6 @@ case "$console_config" in
 esac
 
 # Parse misc partition path and set property
-misc_link=$(ls -l /dev/block/bootdevice/by-name/misc)
+misc_link=$(ls -l /dev/block/platform/soc/1d84000.ufshc/by-name/misc)
 real_path=${misc_link##*>}
 setprop persist.vendor.mmi.misc_dev_path $real_path
-

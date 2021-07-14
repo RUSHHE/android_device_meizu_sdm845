@@ -322,6 +322,16 @@ case "$target" in
         esac
         ;;
 esac
+
+baseband=`getprop ro.baseband`
+#enable atfwd daemon all targets except sda, apq, qcs
+case "$baseband" in
+    "apq" | "sda" | "qcs" )
+        setprop persist.vendor.radio.atfwd.start false;;
+    *)
+        setprop persist.vendor.radio.atfwd.start true;;
+esac
+
 #set default lcd density
 #Since lcd density has read only
 #property, it will not overwrite previous set
@@ -428,9 +438,9 @@ fi
 boot_reason=`cat /proc/sys/kernel/boot_reason`
 reboot_reason=`getprop ro.boot.alarmboot`
 if [ "$boot_reason" = "3" ] || [ "$reboot_reason" = "true" ]; then
-    setprop ro.alarm_boot true
+    setprop ro.vendor.alarm_boot true
 else
-    setprop ro.alarm_boot false
+    setprop ro.vendor.alarm_boot false
 fi
 
 # copy GPU frequencies to system property
