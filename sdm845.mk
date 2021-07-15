@@ -347,7 +347,7 @@ PRODUCT_PACKAGES += \
 
 # FastCharge HAL
 PRODUCT_PACKAGES += \
-    vendor.lineage.fastcharge@1.0-service.meizu_sdm845
+    vendor.mokee.fastcharge@1.0-service.meizu_sdm845
 
 # FOD specific of crDroid
 EXTRA_FOD_ANIMATIONS := true

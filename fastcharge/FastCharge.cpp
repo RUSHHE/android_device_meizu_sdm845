@@ -27,7 +27,7 @@
 #define FASTCHARGE_PATH "/sys/class/meizu/charger/fastcharging"
 
 namespace vendor {
-namespace lineage {
+namespace mokee {
 namespace fastcharge {
 namespace V1_0 {
 namespace implementation {
@@ -97,5 +97,5 @@ Return<bool> FastCharge::setEnabled(bool enable) {
 }  // namespace implementation
 }  // namespace V1_0
 }  // namespace fastcharge
-}  // namespace lineage
+}  // namespace mokee
 }  // namespace vendor

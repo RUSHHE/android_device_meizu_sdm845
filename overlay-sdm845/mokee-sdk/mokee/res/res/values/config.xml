@@ -43,7 +43,7 @@
          // via the alpha channel.
          // Note: if a device notification light supports LIGHTS_RGB_NOTIFICATION_LED
          // then HAL support is not necessary for brightness control.  In this case,
-         // brightness support will be provided by lineage-sdk through the scaling of
+         // brightness support will be provided by mokee-sdk through the scaling of
          // RGB color values.
          LIGHTS_ADJUSTABLE_NOTIFICATION_LED_BRIGHTNESS = 32
 
@@ -54,7 +54,7 @@
          // the alpha channel.
          // Note: if a device battery light supports LIGHTS_RGB_BATTERY_LED then HAL
          // support is not necessary for brightness control.  In this case,
-         // brightness support will be provided by lineage-sdk through the scaling of
+         // brightness support will be provided by mokee-sdk through the scaling of
          // RGB color values.
          LIGHTS_ADJUSTABLE_BATTERY_LED_BRIGHTNESS = 128
 
@@ -102,7 +102,7 @@
             8 - Last app
             9 - Toggle split screen
          This needs to match the enums in
-         sdk/src/java/org/lineageos/internal/util/DeviceKeysConstants.java.
+         sdk/src/java/org/mokee/internal/util/DeviceKeysConstants.java.
     -->
     <integer name="config_longPressOnHomeBehavior">7</integer>
 
@@ -126,7 +126,7 @@
             16 - Toggle Qs Panel
             17 - Ringer Modes
          This needs to match the enums in
-         sdk/src/java/org/lineageos/internal/util/DeviceKeysConstants.java.
+         sdk/src/java/org/mokee/internal/util/DeviceKeysConstants.java.
     -->
     <integer name="config_doubleTapOnHomeBehavior">2</integer>
 
@@ -143,14 +143,14 @@
 
      <!-- Paths to the libraries that contain device specific key handlers -->
      <string-array name="config_deviceKeyHandlerLibs" translatable="false">
-        <item>/system/priv-app/LineageParts/LineageParts.apk</item>
+        <item>/system/priv-app/MokeeParts/MokeeParts.apk</item>
         <item>/system/priv-app/KeyHandler/KeyHandler.apk</item>
      </string-array>
 
      <!-- Names of the key handler classes -->
      <string-array name="config_deviceKeyHandlerClasses" translatable="false">
-        <item>org.lineageos.lineageparts.gestures.KeyHandler</item>
-        <item>org.lineageos.keyhandler.KeyHandler</item>
+        <item>org.mokee.mokeeparts.gestures.KeyHandler</item>
+        <item>org.mokee.keyhandler.KeyHandler</item>
      </string-array>
 
 </resources>
