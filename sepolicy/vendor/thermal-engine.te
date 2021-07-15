@@ -1,2 +1,0 @@
-allow thermal-engine sysfs_kgsl:dir r_dir_perms;
-allow thermal-engine sysfs_thermal:dir r_dir_perms;

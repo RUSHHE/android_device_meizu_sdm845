@@ -8,4 +8,4 @@ on post-fs-data
     chown system system /data/vendor/display
 
 on property:sys.boot_completed=1
-    restart vendor.livedisplay-hal-2-0-meizu_sdm845
+    exec - system system -- /vendor/bin/vendor.mokee.livedisplay@2.0-init.sh

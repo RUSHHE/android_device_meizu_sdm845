@@ -1,5 +1,0 @@
-# DT2W
-type touchpanel_gestures_device, dev_type;
-
-# FOD
-type fp_device, dev_type;

@@ -8,7 +8,6 @@ media.stagefright.enable-aac=true
 media.stagefright.enable-qcp=true
 media.stagefright.enable-fma2dp=true
 media.stagefright.enable-scan=true
-media.stagefright.thumbnail.prefer_hw_codecs=true
 audio.offload.video=true
 media.settings.xml=/vendor/etc/media_profiles_vendor.xml
 
@@ -26,10 +25,6 @@ ro.bluetooth.wipower=false
 bt.max.hfpclient.connections=1
 
 # Graphics
-debug.sf.early_app_phase_offset_ns=1500000
-debug.sf.early_phase_offset_ns=1500000
-debug.sf.early_gl_app_phase_offset_ns=15000000
-debug.sf.early_gl_phase_offset_ns=3000000
 sdm.debug.disable_inline_rotator=1
 sdm.debug.disable_inline_rotator_secure=0
 debug.sf.latch_unsignaled=1
@@ -63,6 +58,7 @@ audio.offload.gapless.enabled=true
 audio.offload.buffer.size.kb=32
 audio.offload.disable=true
 ro.audio.monitorRotation=true
+mm.enable.smoothstreaming=true
 media.stagefright.audio.deep=true
 
 # CABL
@@ -91,6 +87,7 @@ sdm.debug.disable_scalar=0
 sdm.debug.prefersplit=1
 sdm.debug.disable_dest_scalar=1
 persist.vendor.qti.games.gt.prof=1
+mm.enable.qcom_parser=13623037
 persist.hvx.hwjpeg.enable=true
 persist.timed.enable=true
 

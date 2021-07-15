@@ -11,6 +11,8 @@
 
 #include <vendor/mokee/biometrics/fingerprint/inscreen/1.0/IFingerprintInscreen.h>
 #include <vendor/synaptics/fingerprint/interfaces/extensions/1.0/ISteller.h>
+#include <vendor/synaptics/fingerprint/interfaces/extensions/1.0/IStellerClientCallback.h>
+#include <vendor/goodix/hardware/biometrics/fingerprint/2.1/IGoodixFingerprintDaemon.h>
 
 namespace vendor {
 namespace mokee {
@@ -26,6 +28,8 @@ using ::android::hardware::Void;
 using ::android::hardware::hidl_vec;
 
 using ::vendor::synaptics::fingerprint::interfaces::extensions::V1_0::ISteller;
+using ::vendor::synaptics::fingerprint::interfaces::extensions::V1_0::IStellerClientCallback;
+using ::vendor::goodix::hardware::biometrics::fingerprint::V2_1::IGoodixFingerprintDaemon;
 
 class FingerprintInscreen : public IFingerprintInscreen {
   public:
@@ -49,14 +53,13 @@ class FingerprintInscreen : public IFingerprintInscreen {
 
   private:
     sp<ISteller> mSteller;
-
-    std::mutex mCallbackLock;
-    sp<IFingerprintInscreenCallback> mCallback;
+    sp<IStellerClientCallback> mStellerClientCallback;
 
     bool mFingerPressed;
-    bool mIconShown;
 
-    void notifyKeyEvent(int value);
+    std::string mFODModel;
+
+    void notifyHal(int32_t status, int32_t data);
 };
 
 }  // namespace implementation

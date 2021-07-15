@@ -5,6 +5,7 @@ hidl_interface {
     root: "vendor.synaptics",
     srcs: [
         "ISteller.hal",
+        "IStellerClientCallback.hal",
     ],
     interfaces: [
         "android.hidl.base@1.0",

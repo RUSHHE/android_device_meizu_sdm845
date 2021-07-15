@@ -46,7 +46,9 @@ DisplayModes::DisplayModes() {
 
     if (isSupported()) {
         DisplayMode mode = getDefaultDisplayModeInternal();
-        setDisplayMode(mode.id, true);
+        if (mode.id >= 0) {
+            setDisplayMode(mode.id, true);
+        }
     }
 }
 
@@ -60,9 +62,7 @@ DisplayMode DisplayModes::getDisplayModeInternal(const char *file) {
     int32_t id = INVALID;
 
     if (ReadFileToString(file, &tmp)) {
-        if (!Trim(tmp).empty()) {
-            id = std::stoi(Trim(tmp));
-        }
+        id = std::stoi(Trim(tmp));
     }
 
     if (id < 0 || id > mDisplayModes.size() - 1) {
@@ -70,6 +70,10 @@ DisplayMode DisplayModes::getDisplayModeInternal(const char *file) {
     }
 
     return mDisplayModes[id];
+}
+
+DisplayMode DisplayModes::getCurrentDisplayModeInternal() {
+    return getDisplayModeInternal(FILE_LUT);
 }
 
 DisplayMode DisplayModes::getDefaultDisplayModeInternal() {
@@ -84,7 +88,7 @@ Return<void> DisplayModes::getDisplayModes(getDisplayModes_cb _hidl_cb) {
 }
 
 Return<void> DisplayModes::getCurrentDisplayMode(getCurrentDisplayMode_cb _hidl_cb) {
-    _hidl_cb(getDefaultDisplayModeInternal());
+    _hidl_cb(getCurrentDisplayModeInternal());
     return Void();
 }
 
@@ -94,7 +98,11 @@ Return<void> DisplayModes::getDefaultDisplayMode(getDefaultDisplayMode_cb _hidl_
 }
 
 Return<bool> DisplayModes::setDisplayMode(int32_t modeID, bool makeDefault) {
-    DisplayMode currentMode = getDefaultDisplayModeInternal();
+    DisplayMode currentMode = getCurrentDisplayModeInternal();
+
+    if (currentMode.id >= 0 && currentMode.id == modeID) {
+        return true;
+    }
 
     if (modeID < 0 || modeID > mDisplayModes.size() - 1) {
         return false;

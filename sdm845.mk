@@ -15,9 +15,6 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/gsi_keys.mk)
 # Add developer GSI keys into ramdisk, to boot a developer GSI with verified boot.
 $(call inherit-product, $(SRC_TARGET_DIR)/product/developer_gsi_keys.mk)
 
-# Inherit QCOM display dependencies.
-$(call inherit-product-if-exists, vendor/qcom/opensource/commonsys-intf/display/config/display-product-system.mk)
-
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += \
     $(LOCAL_PATH)/overlay-sdm845
@@ -46,9 +43,9 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml \
     frameworks/native/data/etc/android.hardware.usb.accessory.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.usb.accessory.xml \
     frameworks/native/data/etc/android.hardware.usb.host.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.usb.host.xml \
-    frameworks/native/data/etc/android.hardware.vulkan.compute-0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.compute.xml \
-    frameworks/native/data/etc/android.hardware.vulkan.level-1.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.level.xml \
-    frameworks/native/data/etc/android.hardware.vulkan.version-1_1.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.version.xml \
+    frameworks/native/data/etc/android.hardware.vulkan.compute-0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.compute-0.xml \
+    frameworks/native/data/etc/android.hardware.vulkan.level-1.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.level-1.xml \
+    frameworks/native/data/etc/android.hardware.vulkan.version-1_1.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.version-1_1.xml \
     frameworks/native/data/etc/android.hardware.wifi.direct.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.direct.xml \
     frameworks/native/data/etc/android.hardware.wifi.passpoint.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.passpoint.xml \
     frameworks/native/data/etc/android.hardware.wifi.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.xml \
@@ -93,13 +90,15 @@ PRODUCT_COPY_FILES += \
 
 # Bluetooth
 PRODUCT_PACKAGES += \
-    android.hardware.bluetooth.a2dp@1.0-impl
+    android.hardware.bluetooth.a2dp@1.0-impl \
+    libbthost_if
 
 # Camera
 PRODUCT_PACKAGES += \
     libshim_camera \
     android.hardware.camera.provider@2.4-impl \
-    android.hardware.camera.provider@2.4-service
+    android.hardware.camera.provider@2.4-service \
+    Snap
 
 # Charger
 PRODUCT_COPY_FILES += \
@@ -110,11 +109,16 @@ PRODUCT_PACKAGES += \
     android.hardware.configstore@1.1-service \
     android.hardware.graphics.allocator@2.0-impl \
     android.hardware.graphics.allocator@2.0-service \
+    android.hardware.graphics.composer@2.1-impl \
     android.hardware.graphics.composer@2.1-service \
     android.hardware.graphics.mapper@2.0-impl \
     android.hardware.memtrack@1.0-impl \
     android.hardware.memtrack@1.0-service \
     memtrack.sdm845 \
+    libdisplayconfig \
+    libdrm \
+    libdrm.vendor \
+    libqdMetaData.system \
     libtinyxml \
     libvulkan
 
@@ -130,7 +134,7 @@ PRODUCT_PACKAGES += \
 
 # Fingerprint
 PRODUCT_PACKAGES += \
-    android.hardware.biometrics.fingerprint@2.1-service.meizu_sdm845 \
+    android.hardware.biometrics.fingerprint@2.1 \
     vendor.mokee.biometrics.fingerprint.inscreen@1.0-service.meizu_sdm845
 
 # GPS
@@ -139,6 +143,7 @@ PRODUCT_COPY_FILES += \
 
 # Qualcomm vndfwk detect
 PRODUCT_PACKAGES += \
+    libqti_vndfwk_detect \
     libqti_vndfwk_detect.vendor
 
 # Health
@@ -158,11 +163,8 @@ PRODUCT_COPY_FILES += \
 # HIDL
 PRODUCT_PACKAGES += \
     android.hidl.base@1.0 \
-    android.hidl.base@1.0_system \
     libhidltransport \
-    libhidltransport.vendor \
-    libhwbinder \
-    libhwbinder.vendor
+    libhwbinder
 
 # Init
 PRODUCT_COPY_FILES += \
@@ -173,29 +175,14 @@ PRODUCT_PACKAGES += \
     ipacm \
     IPACM_cfg.xml
 
+# IPv6
+PRODUCT_PACKAGES += \
+    ebtables \
+    ethertypes
+
 # IRQ
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/msm_irqbalance.conf:$(TARGET_COPY_OUT_VENDOR)/etc/msm_irqbalance.conf
-
-# Perf
-PRODUCT_BOOT_JARS += \
-    QPerformance \
-    UxPerformance
-
-PRODUCT_PACKAGES += \
-    DisableQTIApps
-
-# Thermal
-PRODUCT_PACKAGES += \
-    android.hardware.thermal@2.0
-
-# TF lite
-PRODUCT_PACKAGES += \
-    libtflite
-
-# Service Tracker
-PRODUCT_PACKAGES += \
-    vendor.qti.hardware.servicetracker@1.2.vendor
 
 # IRSC
 PRODUCT_COPY_FILES += \
@@ -207,13 +194,10 @@ PRODUCT_PACKAGES += \
 
 # LiveDisplay
 PRODUCT_PACKAGES += \
+    vendor.mokee.livedisplay@2.0-init.sh \
     vendor.mokee.livedisplay@2.0-service.meizu_sdm845
 
 # Media
-PRODUCT_PACKAGES += \
-    libavservices_minijail_vendor \
-    libmediaplayerservice
-
 PRODUCT_COPY_FILES += \
     $(call find-copy-subdir-files,*,$(LOCAL_PATH)/media,$(TARGET_COPY_OUT_VENDOR)/etc)
 
@@ -231,8 +215,7 @@ PRODUCT_PACKAGES += \
 
 # Power
 PRODUCT_PACKAGES += \
-    android.hardware.power-service-qti \
-    android.hardware.power.stats@1.0-service.mock
+    android.hardware.power-service-qti
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/powerhint.xml:$(TARGET_COPY_OUT_VENDOR)/etc/powerhint.xml
@@ -251,6 +234,13 @@ PRODUCT_PACKAGES += \
     libjson \
     librmnetctl \
     libxml2
+
+# RCS
+PRODUCT_PACKAGES += \
+    rcs_service_aidl \
+    rcs_service_aidl.xml \
+    rcs_service_api \
+    rcs_service_api.xml
 
 # RenderScript
 PRODUCT_PACKAGES += \
@@ -286,10 +276,8 @@ PRODUCT_PACKAGES += \
     android.hardware.vibrator@1.3-service.meizu_sdm845
 
 # VNDK-SP
-PRODUCT_EXTRA_VNDK_VERSIONS := 29 28 27
-
 PRODUCT_PACKAGES += \
-    libwui \
+    vndk-sp \
     com.android.vndk.current.on_vendor
 
 PRODUCT_COPY_FILES += \
@@ -322,32 +310,13 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     $(call find-copy-subdir-files,*,$(LOCAL_PATH)/wifi,$(TARGET_COPY_OUT_VENDOR)/etc/wifi)
 
-# WiFi Display
-PRODUCT_PACKAGES += \
-    libclang_rt.ubsan_standalone-arm-android \
-    libnl \
-    libwfdaac_vendor \
-    WfdService \
-    WfdCommon
-
-PRODUCT_BOOT_JARS += \
-    WfdCommon
-
 # Tethering
 PRODUCT_PACKAGES += \
     TetheringConfigOverlay
 
-# Parts
+# Doze
 PRODUCT_PACKAGES += \
-    MzSDM845Parts
-
-# KeyHandler
-PRODUCT_PACKAGES += \
-    KeyHandler
-
-# FastCharge HAL
-PRODUCT_PACKAGES += \
-    vendor.lineage.fastcharge@1.0-service.meizu_sdm845
+    ParanoidDoze
 
 # FOD specific of crDroid
 EXTRA_FOD_ANIMATIONS := true

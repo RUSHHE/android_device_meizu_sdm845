@@ -8,7 +8,6 @@ persist.call.waiting.volume=60
 persist.ct_volte_support=1
 persist.radio.fourgOff=1
 persist.radio.multisim.config=dsds
-persist.vendor.radio.add_power_save=1
 persist.vendor.radio.apm_sim_not_pwdn=1
 persist.vendor.radio.custom_ecc=1
 persist.vendor.radio.rat_on=combine
@@ -76,9 +75,6 @@ persist.vendor.audio.ras.enabled=false
 ro.af.client_heap_size_kbyte=7168
 vendor.fm.a2dp.conc.disabled=true
 
-# AV
-vendor.mm.enable.qcom_parser=16777215
-
 # Bluetooth
 persist.vendor.bt.a2dp_offload_cap=sbc-aptx-aptxtws-aptxhd-aac
 persist.vendor.bt.splita2dp.44_1_war=true
@@ -111,12 +107,6 @@ ro.vendor.qti.cgroup_follow.enable=true
 ro.vendor.qti.sys.fw.bg_apps_limit=60
 ro.vendor.qti.sys.fw.bservice_age=5000
 ro.vendor.qti.sys.fw.bservice_enable=true
-vendor.power.pasr.enabled=true
-
-# Dalvik-VM
-dalvik.vm.boot-dex2oat-cpu-set=0,1,2,3,4,5,6,7
-dalvik.vm.image-dex2oat-cpu-set=4,5,6,7
-dalvik.vm.dex2oat-threads=4
 
 # IMS
 persist.dbg.ims_volte_enable=1
@@ -142,8 +132,3 @@ debug.remote.config.disable=true
 # Camera
 ro.vendor.camera.no_vts=1
 persist.camera.expose.aux=1
-
-
-# WiFi Display
-persist.debug.wfd.enable=1
-persist.sys.wfd.virtual=0
